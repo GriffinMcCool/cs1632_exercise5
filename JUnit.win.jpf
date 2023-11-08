@@ -8,7 +8,7 @@ target = edu.pitt.cs.TestRunner
 # Main method arguments.  Enable if you want to obtain a trace of a JUnit faiure.
 #target.args = trace
 
-# Main method arguments.  Enable if you want to JUnit test the buggy version.
+Main method arguments.  Enable if you want to JUnit test the buggy version.
 #target.args = buggy
 
 # If set to true, enumerates all possible values returned by Random.nextInt.

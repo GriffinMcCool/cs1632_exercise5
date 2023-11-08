@@ -4,6 +4,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import gov.nasa.jpf.vm.Verify;
 
 /**
  * Code by @author Wonsun Ahn
@@ -19,7 +20,7 @@ public class DrunkCarnivalShooterTest {
 	private String failString; // A descriptive fail string for assertions
 
 	private int targetChoice; // The user inputed target choice to test (can be between 0 - 3)
-
+	private StringBuilder builder;
 	/**
 	 * Sets up the test fixture.
 	 */
@@ -34,12 +35,13 @@ public class DrunkCarnivalShooterTest {
 		 * Verify API, look at:
 		 * https://github.com/javapathfinder/jpf-core/wiki/Verify-API-of-JPF
 		 */
-
+		targetChoice = Verify.getInt(0,3);
+		builder = new StringBuilder();
 		// Create the game
 		shooter = DrunkCarnivalShooter.createInstance();
 		// Set up the targets in the game to reflect the targets array
 		for (int i = 0; i < 4; i++) {
-			if (targets[i] == false) {
+			if (targets[i] == Verify.getBoolean()) {
 				shooter.takeDownTarget(i);
 			}
 		}
@@ -73,7 +75,13 @@ public class DrunkCarnivalShooterTest {
 	@Test
 	public void testShoot() {
 		// TODO: Implement
+		shooter.shoot(targetChoice, builder);
+		int targetsRemaining = 0;
+		for (int i = 0; i < 4; i++){
+			if (shooter.isTargetStanding(i)) targetsRemaining++;
+		}
 
+		assertEquals(failString, shooter.getRemainingTargetNum(), targetsRemaining);
 		/*
 		 * Currently, it just prints out the failString to demonstrate to you all the
 		 * cases considered by Java Path Finder. If you called the Verify API correctly
@@ -95,6 +103,6 @@ public class DrunkCarnivalShooterTest {
 		 * 
 		 * PLEASE COMMENT OUT when you are done implementing.
 		 */
-		System.out.println(failString);
+		//System.out.println(failString);
 	}
 }
